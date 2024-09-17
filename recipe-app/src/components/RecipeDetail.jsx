@@ -1,31 +1,54 @@
-import { useContext } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { ThemeContext } from '../context/ThemeContext';
-import recipes from '../data/recipes';
+import { useEffect, useState } from 'react';
+import {  useParams } from 'react-router-dom';
+import {fetchRecipesDetails} from '../api';
 
 function RecipeDetail() {
-    const { isDarkMode } = useContext(ThemeContext);
     const { id } = useParams();
-    const recipe = recipes.find(recipe => recipe.id === parseInt(id));
+    const [recipe, setRecipe] = useState(null);
+
+   const getRecipeDetails = async () => {
+    try{
+        const fetchedRecipe = await fetchRecipesDetails(id);
+        if(fetchedRecipe && fetchedRecipe.length > 0) {
+            setRecipe(fetchedRecipe[0]);
+        } else {
+            console.error('No recipe found');
+        }
+    } catch(error) {
+        console.error('getRecipeDetails error: ', error);
+    }
+   }
+
+    useEffect(() => {
+        getRecipeDetails();
+    }, [id]);
 
     if (!recipe) {
-        return <h1>Recipe not found!</h1>;
+        return <p>Loading...</p>;
     }
+
+    const ingredients = [];
+    for (let i =1;  i<= 20; i++) {
+        if(recipe[`strIngredient${i}`]) {
+            ingredients.push(`${recipe[`strIngredient${i}`]} - ${recipe[`strMeasure${i}`]}`);
+        }
+    }
+
 
     return (
         <div className={`recipe-detail ${isDarkMode ? 'dark' : ''}`}>
-            <h1>{recipe.name}</h1>
-            <img src={recipe.image} alt={recipe.name} />
-            <p>{recipe.ingredients}</p>
+            <h1>{recipe.strMeal}</h1>
+            <img src={recipe.strMealThumb} alt={recipe.strMeal} />
+            <p>{recipe.strInstructions}</p>
             <h2>Ingredients</h2>
             <ul>
-                {recipe.ingredients.map((ingredient, index) => (
+                {ingredients.map((ingredient, index) => (
                     <li key={index}>{ingredient}</li>
                 ))}
             </ul>
             <h2>Instructions</h2>
             <ol>
-                {recipe.instructions.map((instruction, index) => (
+                {instructions.map((instruction, index) => (
                     <li key={index}>{instruction}</li>
                 ))}
             </ol>
