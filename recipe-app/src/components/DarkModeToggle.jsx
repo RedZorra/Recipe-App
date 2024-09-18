@@ -1,21 +1,17 @@
-import {useContext } from 'react';
+import { useContext } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 
 function DarkModeToggle() {
-    const { isDarkMode, toggleTheme } = useContext(ThemeContext);
-
-    function onChange(event) {
-        toggleTheme(event.target.checked);
-    }
+    const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
 
     return (
         <div className="dark-mode-toggle">
-        <label className="switch">
-          <input type="checkbox" checked={isDarkMode} onChange={onChange} />
-          <span className="slider round"></span>
-        </label>
-        <span>{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
-      </div> 
+            <label className="switch">
+                <input type="checkbox" checked={isDarkMode} onChange={toggleDarkMode} />
+                <span className="slider round"></span>
+            </label>
+            <span>{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
+        </div> 
     );
 }
 

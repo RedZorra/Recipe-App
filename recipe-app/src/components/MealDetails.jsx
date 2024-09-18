@@ -31,19 +31,23 @@ function MealDetails() {
     }
 
     return (
-        <div className="recipe-detail">
+        <div className="recipe-detail recipe-glasscard">
             <div className="recipe-card">
                 <h1>{meal.strMeal}</h1>
                 <img src={meal.strMealThumb} alt={meal.strMeal} />
             </div>
-            <h2>Ingredients</h2>
-            <ul>
-                {ingredients.map((ingredient, index) => (
+            <div>
+                <h2>Ingredients</h2>
+                <ul>
+                    {ingredients.map((ingredient, index) => (
                     <li key={index}>{ingredient}</li>
                 ))}
-            </ul>
-            <h2>Instructions</h2>
-            <p>{meal.strInstructions}</p>
+                </ul>
+            </div>
+            <div >
+                <h2>Instructions</h2>
+                <p>{meal.strInstructions}</p>
+            </div>
         </div>
     );
 }
