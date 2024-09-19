@@ -15,7 +15,7 @@ function SearchByName() {
             console.error('handleSearch error: ', error);
         }
     };
-
+  // <button onClick={getRandomRecipe} className="surprise-me-button">Surprise Me!</button>
     return(
         <div>
             <form className="search-form" onSubmit={handleSearch}>
@@ -39,7 +39,7 @@ function SearchByName() {
                         </div>
                     ))
                 ) : (
-                    <p>No meals found.</p>
+                    <p>Search something...</p>
                 )}
             </div>
         </div>
